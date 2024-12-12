@@ -20,7 +20,7 @@ const SlidingBanner = () => {
       <Box
         sx={{
           backgroundColor: "#7ED6A5",
-          padding: "8px 16px",
+          padding: "8px 21px",
           borderRadius: "4px",
           flexShrink: 0,
         }}
