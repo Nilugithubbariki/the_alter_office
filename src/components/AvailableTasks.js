@@ -3,7 +3,7 @@ import { Box, Typography, Button, Grid, Card, CardMedia, CardContent } from "@mu
 import { useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 import SearchBox from "./Header";
-
+import { useTheme } from "@mui/material/styles";
 const taskData = [
   {
     id: 1,
@@ -54,7 +54,7 @@ const AvailableTasks = () => {
   const [filter, setFilter] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
-
+  const theme = useTheme();
   const handleSearch = (term) => {
     setSearchTerm(term);
   };
@@ -75,7 +75,7 @@ const AvailableTasks = () => {
           <SearchBox onSearch={handleSearch} />
         </Box>
 
-        <Box sx={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
+        <Box sx={{ display: "flex", gap: "10px", marginBottom: "20px", flexWrap: "wrap" }}>
           {["All", "ReactJS", "React Native", "NodeJS", "UI", "Product Design"].map((category) => (
             <Button
               key={category}
@@ -98,6 +98,9 @@ const AvailableTasks = () => {
                   borderColor: "#888",
                   transform: "scale(1.1)",
                 },
+                [theme.breakpoints.down('sm')]: {
+                  margin: '5px',
+                }
               }}
             >
               {category !== "All" && (
@@ -115,7 +118,7 @@ const AvailableTasks = () => {
         <Grid container spacing={2}>
           {filteredTasks.length > 0 ? (
             filteredTasks.map((task) => (
-              <Grid item xs={12} sm={6} md={4} key={task.id}>
+              <Grid item xs={12} sm={6} md={4} lg={3} key={task.id}>
                 <Card onClick={() => navigate(`/task/${task.id}`, { state: task })} sx={{ cursor: "pointer" }}>
                   <CardMedia
                     component="img"
@@ -145,5 +148,4 @@ const AvailableTasks = () => {
     </>
   );
 };
-
 export default AvailableTasks;

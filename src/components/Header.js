@@ -14,9 +14,11 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import SlidingBanner from '../components/SlidingBanner ';
-import { Link } from 'react-router-dom'; 
-const Header = ({onSearch}) => {
+import { Link } from 'react-router-dom';
+
+const Header = ({ onSearch }) => {
   const isMobile = useMediaQuery('(max-width:600px)');
+  const isDesktop = useMediaQuery('(min-width:601px)');
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [isContactOpen, setContactOpen] = useState(false);
   const [contactForm, setContactForm] = useState({ name: '', email: '', message: '' });
@@ -27,13 +29,14 @@ const Header = ({onSearch}) => {
     const value = e.target.value;
     setSearchValue(value);
     if (onSearch) {
-      onSearch(value); 
+      onSearch(value);
     }
   };
   const handleLoginOpen = () => setLoginOpen(true);
   const handleLoginClose = () => setLoginOpen(false);
   const handleContactOpen = () => setContactOpen(true);
   const handleContactClose = () => setContactOpen(false);
+
   const validateContactForm = () => {
     let errors = { name: '', email: '', message: '' };
     let isValid = true;
@@ -58,7 +61,6 @@ const Header = ({onSearch}) => {
   const validateLoginForm = () => {
     let errors = { loginEmail: '', loginPassword: '' };
     let isValid = true;
-
     if (!loginForm.email) {
       errors.loginEmail = 'Email is required';
       isValid = false;
@@ -114,14 +116,12 @@ const Header = ({onSearch}) => {
             justifyContent: 'space-between',
             alignItems: 'center',
             padding: 0,
-            flexDirection: isMobile ? 'column' : 'row',
           }}
         >
           <Box
             sx={{
               display: 'flex',
               alignItems: 'center',
-              marginBottom: isMobile ? '8px' : 0,
             }}
           >
             <Link to="/" style={{ textDecoration: 'none' }}>
@@ -135,50 +135,41 @@ const Header = ({onSearch}) => {
               />
             </Link>
           </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '16px',
-              flexDirection: isMobile ? 'column' : 'row',
-              width: isMobile ? '100%' : 'auto',
-            }}
-          >
-            <TextField
-      size="small"
-      placeholder="Search for a skill"
-      value={searchValue}
-      onChange={handleSearchChange}
-      InputProps={{
-        endAdornment: (
-          <InputAdornment position="end">
-            <SearchIcon sx={{ color: "#888" }} />
-          </InputAdornment>
-        ),
-      }}
-      sx={{
-        width: "100%",
-        maxWidth: "300px",
-        borderRadius: "20px",
-        "& .MuiOutlinedInput-root": {
-          borderRadius: "20px",
-          "& fieldset": {
-            borderColor: "#ddd",
-          },
-          "&:hover fieldset": {
-            borderColor: "#aaa",
-          },
-        },
-      }}
-    />
+          {isDesktop && (
             <Box
               sx={{
                 display: 'flex',
                 alignItems: 'center',
                 gap: '16px',
-                flexDirection: isMobile ? 'column' : 'row',
               }}
             >
+              <TextField
+                size="small"
+                placeholder="Search for a skill"
+                value={searchValue}
+                onChange={handleSearchChange}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <SearchIcon sx={{ color: "#888" }} />
+                    </InputAdornment>
+                  ),
+                }}
+                sx={{
+                  width: "100%",
+                  maxWidth: "300px",
+                  borderRadius: "20px",
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "20px",
+                    "& fieldset": {
+                      borderColor: "#ddd",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "#aaa",
+                    },
+                  },
+                }}
+              />
               <Box
                 sx={{
                   display: 'flex',
@@ -227,7 +218,41 @@ const Header = ({onSearch}) => {
                 <span style={{ fontWeight: '600', color: '#fff' }}>LOGIN</span>
               </Box>
             </Box>
-          </Box>
+          )}
+          {isMobile && (
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '16px',
+              }}
+            >
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  backgroundColor: '#000',
+                  color: '#fff',
+                  padding: '6px 16px',
+                  borderRadius: '20px',
+                  cursor: 'pointer',
+                  '&:hover': {
+                    backgroundColor: '#333',
+                  },
+                  justifyContent: 'center',
+                }}
+                onClick={handleLoginOpen}
+              >
+                <img
+                  alt="Yellow Hand Icon"
+                  src="https://www.igotskills.in/assets/svg/yellow_hand.svg"
+                  style={{ height: '20px' }}
+                />
+                <span style={{ fontWeight: '600', color: '#fff' }}>LOGIN</span>
+              </Box>
+            </Box>
+          )}
         </Toolbar>
       </AppBar>
       <Box
@@ -321,11 +346,10 @@ const Header = ({onSearch}) => {
                 padding: '10px 24px',
                 borderRadius: '20px',
                 cursor: 'pointer',
-                fontWeight: '600',
                 '&:hover': {
                   backgroundColor: '#f0f0f0',
                 },
-                textAlign: 'center',
+                fontWeight: '600',
               }}
               onClick={handleLoginSubmit}
             >
@@ -348,7 +372,7 @@ const Header = ({onSearch}) => {
           sx: {
             borderRadius: '20px',
             overflow: 'hidden',
-            background: 'green',
+            background: 'linear-gradient(135deg, #6a11cb, #2575fc)',
             color: '#fff',
           },
         }}
@@ -369,7 +393,7 @@ const Header = ({onSearch}) => {
           </IconButton>
           <h2 style={{ textAlign: 'center', margin: 0 }}>Contact Us</h2>
           <TextField
-            label="Your Name"
+            label="Name"
             name="name"
             value={contactForm.name}
             onChange={handleContactChange}
@@ -385,7 +409,7 @@ const Header = ({onSearch}) => {
           />
           {formErrors.name && <FormHelperText error>{formErrors.name}</FormHelperText>}
           <TextField
-            label="Your Email"
+            label="Email"
             name="email"
             value={contactForm.email}
             onChange={handleContactChange}
@@ -407,6 +431,7 @@ const Header = ({onSearch}) => {
             onChange={handleContactChange}
             fullWidth
             variant="outlined"
+            size="medium"
             multiline
             rows={4}
             sx={{
@@ -427,19 +452,18 @@ const Header = ({onSearch}) => {
             <Box
               sx={{
                 backgroundColor: '#fff',
-                color: '#dd2476',
+                color: '#2575fc',
                 padding: '10px 24px',
                 borderRadius: '20px',
                 cursor: 'pointer',
-                fontWeight: '600',
                 '&:hover': {
                   backgroundColor: '#f0f0f0',
                 },
-                textAlign: 'center',
+                fontWeight: '600',
               }}
               onClick={handleContactSubmit}
             >
-              Send Message
+              Submit
             </Box>
           </Box>
         </DialogContent>

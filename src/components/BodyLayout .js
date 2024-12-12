@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Box, Typography, Button, Grid, IconButton, Dialog, DialogContent, DialogActions, Accordion, AccordionSummary, AccordionDetails, List, ListItem, ListItemText, Avatar, ListItemAvatar } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add'; 
+import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import FormatBoldIcon from "@mui/icons-material/FormatBold";
 import FormatItalicIcon from "@mui/icons-material/FormatItalic";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import { useTheme } from "@mui/material/styles";
 import userData from "./api.json"
 import Footer from './Footer';
 import { useNavigate } from 'react-router-dom';
@@ -15,7 +16,7 @@ const BodyLayout = () => {
     const [comments, setComments] = useState([]);
     const [isEmpty, setIsEmpty] = useState(true);
     const [open, setOpen] = useState(false);
-
+    const theme = useTheme();
     const handleOpen = () => {
         setOpen(true);
     };
@@ -26,7 +27,7 @@ const BodyLayout = () => {
     const handleInput = () => {
         setIsEmpty(commentRef.current.textContent.trim() === "");
     };
-    const commentRef = useRef(null); 
+    const commentRef = useRef(null);
     const navigate = useNavigate();
     const handleFormatting = (command) => {
         document.execCommand(command, false, null);
@@ -37,7 +38,7 @@ const BodyLayout = () => {
                 ...comments,
                 { text: commentRef.current.innerHTML, replies: [] },
             ]);
-            commentRef.current.innerHTML = ""; 
+            commentRef.current.innerHTML = "";
         }
     };
     const handleReply = (index, replyText) => {
@@ -55,12 +56,12 @@ const BodyLayout = () => {
         <Box
             sx={{
                 backgroundColor: '#f9f9f6',
-                maxWidth: 'calc(100% - 32px)', 
-                margin: '120px 16px 0px 16px', 
+                maxWidth: 'calc(100% - 32px)',
+                margin: '120px 16px 0px 16px',
             }}
         >
             <Grid container spacing={4} alignItems="flex-start">
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={6} mb={2}>
                     <Button
                         variant="outlined"
                         sx={{
@@ -80,6 +81,12 @@ const BodyLayout = () => {
                                 borderColor: "#888",
                                 transform: "scale(1.1)",
                             },
+                            width: "auto",
+                            [theme.breakpoints.down("sm")]: {
+                                fontSize: "14px",
+                                padding: "4px 8px",
+                                gap: "4px",
+                            },
                         }}
                         onClick={() => navigate("/available-tasks")}
                     >
@@ -90,22 +97,41 @@ const BodyLayout = () => {
                         />
                         ReactJS
                     </Button>
-                    <Typography variant="h3" fontWeight="bold" mb={2} mt={2}>
+                    <Typography
+                        variant="h3"
+                        fontWeight="bold"
+                        mb={2}
+                        mt={2}
+                        sx={{
+                            textAlign: "center",
+                            fontSize: "32px",
+                            [theme.breakpoints.down("sm")]: {
+                                fontSize: "20px",
+                            },
+                        }}
+                    >
                         Build an Engaging Social Media Feed with Interactive Features
                     </Typography>
+
                     <Typography variant="subtitle1" color="text.secondary" mb={4}>
                         By The Alter Office
                     </Typography>
                     <Box
                         sx={{
-                            backgroundColor: '#fff', 
+                            backgroundColor: '#fff',
                             padding: '16px',
-                            borderRadius: '12px', 
-                            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
-                            marginBottom: '16px', 
+                            borderRadius: '12px',
+                            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+                            marginBottom: '16px',
                         }}
                     >
-                        <Box display="flex" alignItems="center" gap="16px" mb={2}>
+                        <Box
+                            display="flex"
+                            flexDirection={{ xs: 'column', sm: 'row' }}
+                            alignItems="center"
+                            gap="16px"
+                            mb={2}
+                        >
                             <Box>
                                 <img
                                     src="https://www.igotskills.in/_next/image?url=https%3A%2F%2Figs-assets.s3.ap-south-1.amazonaws.com%2Fbadges%2FReact-2.png&w=1920&q=75"
@@ -113,20 +139,21 @@ const BodyLayout = () => {
                                     style={{ height: '80px', width: '80px' }}
                                 />
                             </Box>
-                            <Box>
+                            <Box flex={1}>
                                 <Typography
                                     variant="body1"
                                     fontWeight="500"
                                     color="black"
-                                    mb={2} 
+                                    mb={2}
+                                    textAlign={{ xs: 'center', sm: 'left' }}
                                 >
                                     Earn this task badge by completing the following task.
                                 </Typography>
-
                                 <Box
                                     display="flex"
                                     alignItems="center"
-                                    justifyContent="space-between" 
+                                    justifyContent="space-between"
+                                    flexDirection={{ xs: 'column', sm: 'row' }}
                                     width="100%"
                                     gap="16px"
                                 >
@@ -146,12 +173,7 @@ const BodyLayout = () => {
                                                 backgroundColor: '#f5a623',
                                             }}
                                         ></Box>
-                                        <Typography
-                                            variant="body2"
-                                            fontWeight="bold"
-                                            color="text.primary"
-                                            mt={1}
-                                        >
+                                        <Typography variant="body2" fontWeight="bold" color="text.primary" mt={1}>
                                             Take task
                                         </Typography>
                                     </Box>
@@ -161,6 +183,7 @@ const BodyLayout = () => {
                                             height: '2px',
                                             backgroundColor: '#ddd',
                                             position: 'relative',
+                                            display: { xs: 'none', sm: 'block' },
                                         }}
                                     >
                                         <Box
@@ -191,12 +214,7 @@ const BodyLayout = () => {
                                                 border: '2px solid #ddd',
                                             }}
                                         ></Box>
-                                        <Typography
-                                            variant="body2"
-                                            fontWeight="bold"
-                                            color="text.secondary"
-                                            mt={1}
-                                        >
+                                        <Typography variant="body2" fontWeight="bold" color="text.secondary" mt={1}>
                                             Submit Task
                                         </Typography>
                                     </Box>
@@ -206,6 +224,7 @@ const BodyLayout = () => {
                                             height: '2px',
                                             backgroundColor: '#ddd',
                                             position: 'relative',
+                                            display: { xs: 'none', sm: 'block' },
                                         }}
                                     ></Box>
                                     <Box
@@ -225,18 +244,20 @@ const BodyLayout = () => {
                                                 border: '2px solid #ddd',
                                             }}
                                         ></Box>
-                                        <Typography
-                                            variant="body2"
-                                            fontWeight="bold"
-                                            color="text.secondary"
-                                            mt={1}
-                                        >
+                                        <Typography variant="body2" fontWeight="bold" color="text.secondary" mt={1}>
                                             Get Result
                                         </Typography>
                                     </Box>
                                 </Box>
                             </Box>
-                            <Box display="flex" justifyContent="flex-start" alignItems="center" gap="16px">
+                            <Box
+                                display="flex"
+                                flexDirection={{ xs: 'column', sm: 'row' }}
+                                justifyContent={{ xs: 'center', sm: 'flex-start' }}
+                                alignItems="center"
+                                gap="16px"
+                                width="100%"
+                            >
                                 <Button
                                     variant="contained"
                                     sx={{
@@ -248,20 +269,27 @@ const BodyLayout = () => {
                                         '&:hover': {
                                             backgroundColor: '#e3961c',
                                         },
+                                        width: { xs: '100%', sm: 'auto' },
                                     }}
                                     onClick={handleOpen}
                                 >
                                     I'm Taking This
                                 </Button>
-                                <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm" BackdropProps={{
-                                    style: {
-                                        backdropFilter: 'blur(10px)',
-                                    },
-                                }}>
+                                <Dialog
+                                    open={open}
+                                    onClose={handleClose}
+                                    fullWidth
+                                    maxWidth="sm"
+                                    BackdropProps={{
+                                        style: {
+                                            backdropFilter: 'blur(10px)',
+                                        },
+                                    }}
+                                >
                                     <DialogContent>
                                         <Box display="flex" flexDirection="column" alignItems="center" textAlign="center">
                                             <img
-                                                src="https://www.igotskills.in/_next/image?url=%2Fassets%2Fpng%2Flogin-image.png&w=1920&q=75" // Replace with your image
+                                                src="https://www.igotskills.in/_next/image?url=%2Fassets%2Fpng%2Flogin-image.png&w=1920&q=75"
                                                 alt="Illustration"
                                                 style={{ borderRadius: '10px', width: '100%', marginBottom: '20px' }}
                                             />
@@ -282,6 +310,7 @@ const BodyLayout = () => {
                                                     '&:hover': {
                                                         backgroundColor: '#357AE8',
                                                     },
+                                                    width: { xs: '100%', sm: 'auto' },
                                                 }}
                                                 onClick={() => alert('Google login initiated!')}
                                             >
@@ -306,7 +335,6 @@ const BodyLayout = () => {
                         </Box>
                     </Box>
                 </Grid>
-
                 <Grid item xs={12} md={6}>
                     <img
                         src="https://www.igotskills.in/_next/image?url=https%3A%2F%2Fs3.ap-south-1.amazonaws.com%2Figs-assets%2Fuser%2Fprofile-photos%2F2_EClZbu2ewZ3rq2rrMQoP0JljR.png&w=1080&q=75"
@@ -581,7 +609,7 @@ const BodyLayout = () => {
                                         padding: "8px",
                                         marginBottom: "16px",
                                         outline: "none",
-                                        color: isEmpty ? "#aaa" : "#000", 
+                                        color: isEmpty ? "#aaa" : "#000",
                                     }}
                                 >
                                     {isEmpty ? "Write your comment here..." : ""}
@@ -628,8 +656,8 @@ const BodyLayout = () => {
                                                     onKeyDown={(e) => {
                                                         if (e.key === "Enter" && e.target.innerText.trim() !== "") {
                                                             handleReply(index, e.target.innerText.trim());
-                                                            e.target.innerText = ""; 
-                                                            e.preventDefault(); 
+                                                            e.target.innerText = "";
+                                                            e.preventDefault();
                                                         }
                                                     }}
                                                     sx={{
@@ -701,7 +729,6 @@ const BodyLayout = () => {
                                 padding: '16px',
                                 borderRadius: '51px',
                                 boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
-                                // maxWidth: '400px',
                                 margin: '24px auto',
                             }}
                         >
@@ -732,7 +759,6 @@ const BodyLayout = () => {
             </Box>
             <Footer />
         </Box>
-
     );
 };
 export default BodyLayout;

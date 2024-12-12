@@ -1,5 +1,4 @@
 import React from 'react';
-
 const ContactPage = () => {
   return (
     <div style={{ padding: '20px' }}>

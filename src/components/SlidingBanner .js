@@ -1,16 +1,19 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 const SlidingBanner = () => {
+  const isMobile = useMediaQuery("(max-width:600px)");
+  const isTablet = useMediaQuery("(max-width:900px)");
   return (
     <Box
       sx={{
-        backgroundColor: "#a0f0a7", 
+        backgroundColor: "#a0f0a7",
         display: "flex",
         alignItems: "center",
         overflow: "hidden",
         position: "relative",
-        height: "38px", 
+        height: "38px",
         padding: "0 0",
+        fontSize: isMobile ? "12px" : isTablet ? "14px" : "16px",
       }}
     >
       <Box
@@ -34,13 +37,15 @@ const SlidingBanner = () => {
       </Box>
       <Box
         component="marquee"
-        behavior="scroll" 
-        direction="left" 
-        scrollamount="4" 
+        behavior="scroll"
+        direction="left"
+        scrollamount="4"
         sx={{
           display: "flex",
           alignItems: "center",
-          whiteSpace: "nowrap", 
+          whiteSpace: "nowrap",
+          minWidth: "100%",
+          overflow: "hidden",
         }}
       >
         <Box
@@ -52,7 +57,10 @@ const SlidingBanner = () => {
           <img
             src="https://www.igotskills.in/_next/image?url=https%3A%2F%2Figs-assets.s3.ap-south-1.amazonaws.com%2Fskills%2Freactjs.png&w=48&q=75"
             alt="Skill Logo"
-            style={{ height: "20px", marginRight: "8px" }}
+            style={{
+              height: isMobile ? "16px" : "20px",
+              marginRight: "8px",
+            }}
           />
           <Typography
             variant="body2"
@@ -60,6 +68,7 @@ const SlidingBanner = () => {
               fontWeight: 600,
               color: "#000",
               marginRight: "32px",
+              fontSize: isMobile ? "12px" : "14px",
             }}
           >
             New Challenge created in ReactJS Skill: Build an Engaging Social
@@ -68,7 +77,10 @@ const SlidingBanner = () => {
           <img
             src="https://www.igotskills.in/_next/image?url=https%3A%2F%2Figs-assets.s3.ap-south-1.amazonaws.com%2Fskills%2Fnodejs.png&w=48&q=75"
             alt="Skill Logo"
-            style={{ height: "20px", marginRight: "8px" }}
+            style={{
+              height: isMobile ? "16px" : "20px",
+              marginRight: "8px",
+            }}
           />
           <Typography
             variant="body2"
@@ -76,6 +88,7 @@ const SlidingBanner = () => {
               fontWeight: 600,
               color: "#000",
               marginRight: "32px",
+              fontSize: isMobile ? "12px" : "14px",
             }}
           >
             New Challenge created in NodeJS Skill: Build an Advanced URL
