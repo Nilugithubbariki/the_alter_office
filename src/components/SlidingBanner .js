@@ -13,6 +13,7 @@ const SlidingBanner = () => {
         position: "relative",
         height: "38px",
         padding: "0 0",
+        margin:"-7px",
         fontSize: isMobile ? "12px" : isTablet ? "14px" : "16px",
       }}
     >
@@ -21,7 +22,6 @@ const SlidingBanner = () => {
           backgroundColor: "#7ED6A5",
           padding: "8px 16px",
           borderRadius: "4px",
-          marginRight: "16px",
           flexShrink: 0,
         }}
       >
